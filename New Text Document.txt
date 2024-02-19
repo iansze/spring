@@ -1,0 +1,228 @@
+CREATE SCHEMA `movie`;
+
+use `movie`;
+
+
+CREATE TABLE `movie` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `imdbId` int NOT NULL,
+  `title` varchar(128) DEFAULT NULL,
+  `release_date` varchar(45) DEFAULT NULL,
+  `trailer` varchar(45) DEFAULT NULL,
+  `poster` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `backdrops` (
+  `backdrop_id` int NOT NULL AUTO_INCREMENT,
+  `movie_id` int NOT NULL,
+  `url` varchar(128) DEFAULT NULL,
+  CONSTRAINT FK_BackdMovie FOREIGN KEY (movie_id)
+ REFERENCES movie(id),
+  PRIMARY KEY (`backdrop_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+CREATE TABLE Genres (
+    genre_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL
+);
+
+create table movie_genres(
+	 genre_id int,
+     movie_id int,
+     primary key(genre_id,movie_id),
+     foreign key (genre_id) REFERENCES genres(genre_id),
+    FOREIGN KEY (movie_id) REFERENCES Movie(id)
+    )ENGINE=InnoDB DEFAULT CHARSET=latin1;
+     
+create table review(
+	 review_id INT AUTO_INCREMENT PRIMARY KEY,
+     content varchar(128) DEFAULT NULL
+    )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;    
+     
+create table movie_review(
+	 review_id int,
+     movie_id int,
+     primary key(review_id,movie_id),
+     foreign key (review_id) REFERENCES review(review_id),
+    FOREIGN KEY (movie_id) REFERENCES Movie(id)
+    )ENGINE=InnoDB DEFAULT CHARSET=latin1;
+    
+    INSERT INTO movie (imdbId, title, release_date, trailer, poster) VALUES
+('tt3915174', 'Puss in Boots: The Last Wish', '2022-12-21', 'https://www.youtube.com/watch?v=tHb7WlgyaUc', 'https://image.tmdb.org/t/p/w500/1NqwE6LP9IEdOZ57NCT51ftHtWT.jpg');
+
+INSERT INTO genres (name) VALUES ('Animation'), ('Action'), ('Adventure'), ('Comedy'), ('Family');
+
+INSERT INTO movie_genres (movie_id, genre_id) VALUES
+((SELECT id FROM movie WHERE imdbId = 'tt3915174'), (SELECT genre_id FROM genres WHERE name = 'Animation')),
+((SELECT id FROM movie WHERE imdbId = 'tt3915174'), (SELECT genre_id FROM genres WHERE name = 'Action')),
+((SELECT id FROM movie WHERE imdbId = 'tt3915174'), (SELECT genre_id FROM genres WHERE name = 'Adventure')),
+((SELECT id FROM movie WHERE imdbId = 'tt3915174'), (SELECT genre_id FROM genres WHERE name = 'Comedy')),
+((SELECT id FROM movie WHERE imdbId = 'tt3915174'), (SELECT genre_id FROM genres WHERE name = 'Family'));
+
+
+INSERT INTO backdrops (movie_id, url) VALUES
+((SELECT id FROM movie WHERE imdbId = 'tt3915174'), 'https://image.tmdb.org/t/p/original/r9PkFnRUIthgBp2JZZzD380MWZy.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt3915174'), 'https://image.tmdb.org/t/p/original/faXT8V80JRhnArTAeYXz0Eutpv9.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt3915174'), 'https://image.tmdb.org/t/p/original/tGwO4xcBjhXC0p5qlkw37TrH6S6.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt3915174'), 'https://image.tmdb.org/t/p/original/qLE8yuieTDN93WNJRmFSAEJChOg.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt3915174'), 'https://image.tmdb.org/t/p/original/cP8YNG3XUeBmO8Jk7Skzq3vwHy1.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt3915174'), 'https://image.tmdb.org/t/p/original/fnfirCEDIkxZnQEtEMMSgllm0KZ.jpg');
+
+INSERT INTO movie (imdbId, title, release_date, trailer, poster) VALUES
+('tt1630029', 'Avatar: The Way of Water', '2022-12-16', 'https://www.youtube.com/watch?v=d9MyW72ELq0', 'https://image.tmdb.org/t/p/w500/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg');
+
+INSERT INTO genres (name) VALUES ('Science Fiction'), ('Action'), ('Adventure')
+ON DUPLICATE KEY UPDATE name = VALUES(name);
+
+INSERT INTO movie_genres (movie_id, genre_id) VALUES
+((SELECT id FROM movie WHERE imdbId = 'tt1630029'), (SELECT genre_id FROM genres WHERE name = 'Science Fiction')),
+((SELECT id FROM movie WHERE imdbId = 'tt1630029'), (SELECT genre_id FROM genres WHERE name = 'Action')),
+((SELECT id FROM movie WHERE imdbId = 'tt1630029'), (SELECT genre_id FROM genres WHERE name = 'Adventure'));
+
+
+INSERT INTO backdrops (movie_id, url) VALUES
+((SELECT id FROM movie WHERE imdbId = 'tt1630029'), 'https://image.tmdb.org/t/p/original/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt1630029'), 'https://image.tmdb.org/t/p/original/evaFLqtswezLosllRZtJNMiO1UR.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt1630029'), 'https://image.tmdb.org/t/p/original/zaapQ1zjKe2BGhhowh5pM251Gpl.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt1630029'), 'https://image.tmdb.org/t/p/original/tQ91wWQJ2WRNDXwxuO7GCXX5VPC.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt1630029'), 'https://image.tmdb.org/t/p/original/5gPQKfFJnl8d1edbkOzKONo4mnr.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt1630029'), 'https://image.tmdb.org/t/p/original/37ZswIuRQcRBN7kHij5MBjzRMRt.jpg');
+
+
+INSERT INTO movie (imdbId, title, release_date, trailer, poster) 
+VALUES ('tt8760708', 'M3GAN', '2023-01-06', 'https://www.youtube.com/watch?v=BRb4U99OU80', 'https://image.tmdb.org/t/p/w500/xBl5AGw7HXZcv1nNXPlzGgO4Cfo.jpg');
+
+INSERT INTO genres (name) VALUES ('Horror');
+
+INSERT INTO movie_genres (movie_id, genre_id) 
+VALUES 
+((SELECT id FROM movie WHERE imdbId = 'tt8760708'), (SELECT genre_id FROM genres WHERE name = 'Science Fiction')),
+((SELECT id FROM movie WHERE imdbId = 'tt8760708'), (SELECT genre_id FROM genres WHERE name = 'Horror')),
+((SELECT id FROM movie WHERE imdbId = 'tt8760708'), (SELECT genre_id FROM genres WHERE name = 'Comedy'));
+
+INSERT INTO backdrops (movie_id, url) VALUES 
+((SELECT id FROM movie WHERE imdbId = 'tt8760708'), 'https://image.tmdb.org/t/p/original/5kAGbi9MFAobQTVfK4kWPnIfnP0.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt8760708'), 'https://image.tmdb.org/t/p/original/dlxzUj7z1MqEcFiwvvrj0bvBKDY.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt8760708'), 'https://image.tmdb.org/t/p/original/cNHXdmr4amP6EPCMa0dqD8rwzDV.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt8760708'), 'https://image.tmdb.org/t/p/original/dC4tj1ONdlZ2TWv4XD2SA1KUnJN.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt8760708'), 'https://image.tmdb.org/t/p/original/vpK2rp3J5LiC01HoNM0j9DEHQ1T.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt8760708'), 'https://image.tmdb.org/t/p/original/txQLFd6rfQrskQhFENkS1jElptt.jpg');
+
+
+INSERT INTO movie (imdbId, title, release_date, trailer, poster) VALUES 
+('tt11116912', 'Troll', '2022-12-01', 'https://www.youtube.com/watch?v=AiohkY_XQYQ', 'https://image.tmdb.org/t/p/w500/9z4jRr43JdtU66P0iy8h18OyLql.jpg');
+
+INSERT INTO genres (name) VALUES ('Fantasy');
+
+INSERT INTO movie_genres (movie_id, genre_id) VALUES 
+((SELECT id FROM movie WHERE imdbId = 'tt11116912'), (SELECT genre_id FROM genres WHERE name = 'Fantasy')),
+((SELECT id FROM movie WHERE imdbId = 'tt11116912'), (SELECT genre_id FROM genres WHERE name = 'Action')),
+((SELECT id FROM movie WHERE imdbId = 'tt11116912'), (SELECT genre_id FROM genres WHERE name = 'Adventure'));
+
+
+INSERT INTO backdrops (movie_id, url) 
+VALUES 
+((SELECT id FROM movie WHERE imdbId = 'tt11116912'), 'https://image.tmdb.org/t/p/original/53BC9F2tpZnsGno2cLhzvGprDYS.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt11116912'), 'https://image.tmdb.org/t/p/original/e9Qb2kmBnMXHCmNMI8NX1JbWhh1.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt11116912'), 'https://image.tmdb.org/t/p/original/2WjOOOGUu6dp4r8VqR5n48DY7JG.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt11116912'), 'https://image.tmdb.org/t/p/original/duIsyybgrC4S8kcCIVaxNOttV15.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt11116912'), 'https://image.tmdb.org/t/p/original/3RS8runn9AfrYDzRVPWuGPmvXQf.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt11116912'), 'https://image.tmdb.org/t/p/original/8wLRn2VvBlCu6cqYS4ypipnwosr.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt11116912'), 'https://image.tmdb.org/t/p/original/zDqVVkmfvj47FBUE5lwE4rWnITu.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt11116912'), 'https://image.tmdb.org/t/p/original/682Ui5DwZDdbIPzKAEOR7cJlMXa.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt11116912'), 'https://image.tmdb.org/t/p/original/6jdlppcnGi3XuJamfs4Vl7HyxB.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt11116912'), 'https://image.tmdb.org/t/p/original/uIq83ogs7QBEWi1aqmUrdDIH61m.jpg');
+
+INSERT INTO movie (imdbId, title, release_date, trailer, poster) VALUES 
+('tt6443346', 'Black Adam', '2022-10-19', 'https://www.youtube.com/watch?v=JaV7mmc9HGw', 'https://image.tmdb.org/t/p/w500/pFlaoHTZeyNkG83vxsAJiGzfSsa.jpg');
+
+INSERT INTO genres (name) 
+VALUES ('Fantasy'), ('Action'), ('Science Fiction')
+ON DUPLICATE KEY UPDATE name = VALUES(name);
+
+INSERT INTO movie_genres (movie_id, genre_id) 
+VALUES 
+((SELECT id FROM movie WHERE imdbId = 'tt6443346'), (SELECT genre_id FROM genres WHERE name = 'Fantasy')),
+((SELECT id FROM movie WHERE imdbId = 'tt6443346'), (SELECT genre_id FROM genres WHERE name = 'Action')),
+((SELECT id FROM movie WHERE imdbId = 'tt6443346'), (SELECT genre_id FROM genres WHERE name = 'Science Fiction'));
+
+INSERT INTO backdrops (movie_id, url) 
+VALUES 
+((SELECT id FROM movie WHERE imdbId = 'tt6443346'), 'https://image.tmdb.org/t/p/original/bQXAqRx2Fgc46uCVWgoPz5L5Dtr.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt6443346'), 'https://image.tmdb.org/t/p/original/9hNtTwY8P5v2MKnUeb7iuREI7Yb.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt6443346'), 'https://image.tmdb.org/t/p/original/zplntIhzXyBiXFYWReETxh0uyFF.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt6443346'), 'https://image.tmdb.org/t/p/original/yxkhM18dYwsRRffLnd9lz2d4i0v.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt6443346'), 'https://image.tmdb.org/t/p/original/bgaBKREAfUtZgvd6zoV6RQRcIUt.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt6443346'), 'https://image.tmdb.org/t/p/original/uqYxoj4hqwocwfBs2xxGyQT88Yk.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt6443346'), 'https://image.tmdb.org/t/p/original/qBx97wytqlyPqXATHqRgIVFxJRU.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt6443346'), 'https://image.tmdb.org/t/p/original/d6MhreFdMHONqX3iZlJGCF8UkIt.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt6443346'), 'https://image.tmdb.org/t/p/original/9inNotReApz0n50WvWbrt0n1cbL.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt6443346'), 'https://image.tmdb.org/t/p/original/pSOuqtJmdh7aI1yiK7M8e0PmbPC.jpg');
+
+INSERT INTO movie (imdbId, title, release_date, trailer, poster) VALUES 
+('tt0499549', 'Avatar', '2009-12-15', 'https://www.youtube.com/watch?v=5PSNL1qE6VY', 'https://image.tmdb.org/t/p/w500/jRXYjXNq0Cs2TcJjLkki24MLp7u.jpg');
+
+INSERT INTO movie_genres (movie_id, genre_id) 
+VALUES 
+((SELECT id FROM movie WHERE imdbId = 'tt0499549'), (SELECT genre_id FROM genres WHERE name = 'Fantasy')),
+((SELECT id FROM movie WHERE imdbId = 'tt0499549'), (SELECT genre_id FROM genres WHERE name = 'Action')),
+((SELECT id FROM movie WHERE imdbId = 'tt0499549'), (SELECT genre_id FROM genres WHERE name = 'Science Fiction')),
+((SELECT id FROM movie WHERE imdbId = 'tt0499549'), (SELECT genre_id FROM genres WHERE name = 'Adventure'));
+
+
+INSERT INTO backdrops (movie_id, url) VALUES 
+((SELECT id FROM movie WHERE imdbId = 'tt0499549'), 'https://image.tmdb.org/t/p/original/o0s4XsEDfDlvit5pDRKjzXR4pp2.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt0499549'), 'https://image.tmdb.org/t/p/original/8I37NtDffNV7AZlDa7uDvvqhovU.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt0499549'), 'https://image.tmdb.org/t/p/original/2YLOjUiczXEgVZFDSIeH3iWB3Ub.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt0499549'), 'https://image.tmdb.org/t/p/original/Yc9q6QuWrMp9nuDm5R8ExNqbEq.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt0499549'), 'https://image.tmdb.org/t/p/original/jlQJDD0L5ZojjlS0KYnApdO0n19.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt0499549'), 'https://image.tmdb.org/t/p/original/sfw4m2tOgQRzhF6VXxaXGfd1vX.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt0499549'), 'https://image.tmdb.org/t/p/original/7ABsaBkO1jA2psC8Hy4IDhkID4h.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt0499549'), 'https://image.tmdb.org/t/p/original/xMMrBziwJqrgjerqpNeQvwuwiUp.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt0499549'), 'https://image.tmdb.org/t/p/original/chauy3iJaZtrMbTr72rgNmOZwo3.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt0499549'), 'https://image.tmdb.org/t/p/original/mYJkJ7YxJsUNI1nAOOUOpRN2auC.jpg');
+
+
+INSERT INTO movie (imdbId, title, release_date, trailer, poster) VALUES 
+('tt3447590', 'Roald Dahl''s Matilda the Musical', '2022-11-25', 'https://www.youtube.com/watch?v=lroAhsDr2vI', 'https://image.tmdb.org/t/p/w500/ga8R3OiOMMgSvZ4cOj8x7prUNYZ.jpg');
+
+INSERT INTO movie_genres (movie_id, genre_id) 
+VALUES 
+((SELECT id FROM movie WHERE imdbId = 'tt3447590'), (SELECT genre_id FROM genres WHERE name = 'Fantasy')),
+((SELECT id FROM movie WHERE imdbId = 'tt3447590'), (SELECT genre_id FROM genres WHERE name = 'Family')),
+((SELECT id FROM movie WHERE imdbId = 'tt3447590'), (SELECT genre_id FROM genres WHERE name = 'Comedy'));
+
+
+INSERT INTO backdrops (movie_id, url) VALUES 
+((SELECT id FROM movie WHERE imdbId = 'tt3447590'), 'https://image.tmdb.org/t/p/original/nWs0auTqn2UaFGfTKtUE5tlTeBu.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt3447590'), 'https://image.tmdb.org/t/p/original/bPftMelR4N3jUg2LTlEblFz0gWk.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt3447590'), 'https://image.tmdb.org/t/p/original/u2MLMkGEjJGQDs17Vmoej1RYFph.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt3447590'), 'https://image.tmdb.org/t/p/original/jG52tsazn04F1fe8hPZfVv7ICKt.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt3447590'), 'https://image.tmdb.org/t/p/original/4INEI7t7Vcg0cFvze7UIgwYCeSG.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt3447590'), 'https://image.tmdb.org/t/p/original/krAu6znzW8c54NdJPneNi4bem1l.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt3447590'), 'https://image.tmdb.org/t/p/original/6TUMppDMrYA4gzoaDUbbSnZFlxW.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt3447590'), 'https://image.tmdb.org/t/p/original/hacV1h1SWrPlrerF3xpetvEdqT.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt3447590'), 'https://image.tmdb.org/t/p/original/7iXsB1r9IK17ZFShqoxcHKQ7dLp.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt3447590'), 'https://image.tmdb.org/t/p/original/dwiRYDLcFyDOkgkSc1JFtTr6Kdk.jpg');
+
+
+INSERT INTO movie (imdbId, title, release_date, trailer, poster) VALUES
+('tt9114286', 'Black Panther: Wakanda Forever', '2022-11-11', 'https://www.youtube.com/watch?v=_Z3QKkl1WyM', 'https://image.tmdb.org/t/p/w500/cryEN3sWlgB2wTzcUNVtDGI8bkM.jpg');
+
+INSERT INTO movie_genres (movie_id, genre_id) VALUES
+((SELECT id FROM movie WHERE imdbId = 'tt9114286'), (SELECT genre_id FROM genres WHERE name = 'Action')),
+((SELECT id FROM movie WHERE imdbId = 'tt9114286'), (SELECT genre_id FROM genres WHERE name = 'Adventure')),
+((SELECT id FROM movie WHERE imdbId = 'tt9114286'), (SELECT genre_id FROM genres WHERE name = 'Science Fiction'));
+
+INSERT INTO backdrops (movie_id, url) VALUES
+((SELECT id FROM movie WHERE imdbId = 'tt9114286'), 'https://image.tmdb.org/t/p/original/yYrvN5WFeGYjJnRzhY0QXuo4Isw.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt9114286'), 'https://image.tmdb.org/t/p/original/xDMIl84Qo5Tsu62c9DGWhmPI67A.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt9114286'), 'https://image.tmdb.org/t/p/original/cs3LpA38BS2XDPfUzdgMB537XOo.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt9114286'), 'https://image.tmdb.org/t/p/original/6SGMzCsaU094Mt32IHGkIYtIl06.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt9114286'), 'https://image.tmdb.org/t/p/original/bty0TwJGsxMqYRptgyzn28Cxq5y.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt9114286'), 'https://image.tmdb.org/t/p/original/h2jp3CSdTPc22mUqps9I8vXDPaN.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt9114286'), 'https://image.tmdb.org/t/p/original/fSfWloWi5rmqbmC7GhO0HY2TMZW.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt9114286'), 'https://image.tmdb.org/t/p/original/vZujZnmkYB5nGUC5d5llK9DbGLk.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt9114286'), 'https://image.tmdb.org/t/p/original/8sMmAmN2x7mBiNKEX2o0aOTozEB.jpg'),
+((SELECT id FROM movie WHERE imdbId = 'tt9114286'), 'https://image.tmdb.org/t/p/original/geI3Mk7nehX1kvyIY3K5ajaiNfI.jpg');
