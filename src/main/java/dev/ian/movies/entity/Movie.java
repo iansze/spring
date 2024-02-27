@@ -1,6 +1,10 @@
 package dev.ian.movies.entity;
 
 import java.util.List;
+
+
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Table;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -38,24 +42,27 @@ public class Movie {
     private String poster;
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "movie_genres", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
-    private List<Genres> genres;
+    @JoinTable(name = "movie_genres", 
+        joinColumns = @JoinColumn(name = "movie_id"),
+        inverseJoinColumns = @JoinColumn(name = "genre_id"))
+        @JsonManagedReference
+    private List<Genre> genres;
 
     @OneToMany(mappedBy = "movie")
+    @JsonManagedReference
     private List<Backdrops> backdrops;
 
     public Movie() {
     }
 
-    public Movie (int id, String imdbId, String title, String releaseDate, String trailer, String poster, List<Genres> genres, List<Backdrops> backdrops) {
+    public Movie (int id, String imdbId, String title, String releaseDate, String trailer, String poster) {
         this.id = id;
         this.imdbId = imdbId;
         this.title = title;
         this.releaseDate = releaseDate;
         this.trailer = trailer;
         this.poster = poster;
-        this.genres = genres;
-        this.backdrops = backdrops;
+
     }
 
 
@@ -110,11 +117,11 @@ public class Movie {
         this.poster = poster;
     }
 
-    public List<Genres> getGenres() {
+    public List<Genre> getGenres() {
         return genres;
     }
 
-    public void setGenres(List<Genres> genres) {
+    public void setGenres(List<Genre> genres) {
         this.genres = genres;
     }
 
@@ -127,9 +134,5 @@ public class Movie {
     }
 
     
-    @Override
-    public String toString() {
-        return "backdrops=" + backdrops + ", genres=" + genres + ", id=" + id + ", imdbId=" + imdbId + ", poster="
-                + poster + ", releaseDate=" + releaseDate + ", title=" + title + ", trailer=" + trailer;
-    }
+
 }

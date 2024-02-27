@@ -1,6 +1,8 @@
 package dev.ian.movies.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,6 +23,7 @@ public class Backdrops {
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "movie_id")
+    @JsonBackReference
     private Movie movie;
 
     @Column(name = "url")
@@ -59,8 +62,5 @@ public class Backdrops {
         this.url = url;
     }
 
-    @Override
-    public String toString() {
-        return "Backdrops [backdropId=" + backdropId + ", movie=" + movie + ", url=" + url + "]";
-    }
+
 }

@@ -1,22 +1,22 @@
 package dev.ian.movies.entity;
 
 
-import java.util.List;
 
+
+import java.util.List;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.JoinColumn;
 
 @Entity
 @Table(name = "genres")
-public class Genres {
+public class Genre {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,17 +26,18 @@ public class Genres {
     @Column(name = "name")
     private String genresName;
 
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "movie_genres", joinColumns = @JoinColumn(name = "genre_id"), inverseJoinColumns = @JoinColumn(name = "movie_id"))
+    
+    @ManyToMany(mappedBy = "genres", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JsonBackReference
     private List<Movie> movies;
 
-    public Genres() {
+    public Genre() {
     }
 
-    public Genres(int genresId, String genresName, List<Movie> movies) {
+    public Genre(int genresId, String genresName) {
         this.genresId = genresId;
         this.genresName = genresName;
-        this.movies = movies;
+      
     }
 
     public int getGenresId() {
