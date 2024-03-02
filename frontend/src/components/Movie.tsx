@@ -7,10 +7,13 @@ type MovieProps = {
 };
 
 const Movie = ({ data }: MovieProps) => {
-  const { id, title, releaseDate, genres, backdrops } = data;
+  const { id, title, releaseDate, genres, backdrops, trailer } = data;
+  const fadeOutEffect = parseInt(id) % 2 === 0 ? "animate-fadeOutLeft" : "animate-fadeOutRight";
+
   return (
-    <div className="h-[200px] md:h-[300px]  lg:h-[400px] group relative">
-      <div className="h-full w-full absolute top-0 bg-gradient-to-r from-gray-900 from-30% to-gray-400 opacity-50 z-10"></div>
+    <div className="h-[200px] md:h-[300px]  lg:h-[400px] group relative ">
+      <div className={`absolute w-full h-full bg-black ${fadeOutEffect} `} />
+      <div className="h-full w-full absolute top-0 bg-gradient-to-r from-gray-900 from-30% to-gray-400 opacity-50 z-10" />
       <div className="h-full  absolute top-0 overflow-hidden -z-10 ">
         <img src={backdrops[0].url} alt={title} className="w-full " />
       </div>
@@ -25,7 +28,7 @@ const Movie = ({ data }: MovieProps) => {
           ))}
         </ul>
       </div>
-      <ReviewAndTrailerPanel id={id} />
+      <ReviewAndTrailerPanel id={id} trailer={trailer} />
     </div>
   );
 };

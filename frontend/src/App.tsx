@@ -16,12 +16,12 @@ function App() {
   }, []);
 
   return (
-    <>
+    <div className="test">
       <Header />
       {data.map((movie) => (
         <Movie key={movie.id} data={movie} />
       ))}
-    </>
+    </div>
   );
 }
 

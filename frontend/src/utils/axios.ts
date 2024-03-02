@@ -9,5 +9,6 @@ export const requests = {
   signup: "/auth/signup",
   login: "/auth/login",
   updateAccount: "/auth/update",
-  fetchImagesById: "/movie/backdrops",
+  fetchImagesById: "/movie/backdrops/",
+  fetchReviews: "/movie/review/",
 };

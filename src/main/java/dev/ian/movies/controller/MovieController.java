@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.ian.movies.dto.ReviewDto;
 import dev.ian.movies.entity.Backdrops;
 import dev.ian.movies.entity.Movie;
+import dev.ian.movies.entity.Review;
+import dev.ian.movies.entity.User;
 import dev.ian.movies.service.MovieService;
 
 
@@ -38,6 +41,17 @@ public class MovieController {
         List<Backdrops> backdrops = movieService.findMovieBackdrop(id);
         return ResponseEntity.ok(backdrops);
     }
+
+    @GetMapping("/movie/review/{id}")
+    public ResponseEntity<?> getReview(@PathVariable int id) {
+        try{
+            List<ReviewDto> movie = movieService.getAllReviews(id);
+            return ResponseEntity.ok(movie);
+        }catch(Exception e){
+            return ResponseEntity.badRequest().body("Error message: " + e.getMessage());
+        }
+        
+     }
 
 
 }

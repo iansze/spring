@@ -69,4 +69,9 @@ public class UserService {
         userRepository.save(user);
         return "Review added successfully";
     }
+
+    public Review getReview(int id) {
+        User user = userRepository.findById(id).get();
+        return user.getReview().get(0);
+    }
 }

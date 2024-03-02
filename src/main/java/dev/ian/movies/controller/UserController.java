@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -70,11 +71,22 @@ public class UserController {
      }
      }
 
-     @PostMapping("/movie/review/{id}")
+     @PostMapping("/user/review/{id}")
      public ResponseEntity<?> addReview(@PathVariable int id , @RequestBody ReviewDto reviewDto) {
         try{
             String review = userService.addReview(id, reviewDto);
             return ResponseEntity.ok(review);
+        }catch(Exception e){
+            return ResponseEntity.badRequest().body("Error message: " + e.getMessage());
+        }
+        
+     }
+
+     @GetMapping("/user/review/{id}")
+     public ResponseEntity<?> getReview(@PathVariable int id) {
+        try{
+            User user = userService.findById(id).get();
+            return ResponseEntity.ok(user.getReview());
         }catch(Exception e){
             return ResponseEntity.badRequest().body("Error message: " + e.getMessage());
         }

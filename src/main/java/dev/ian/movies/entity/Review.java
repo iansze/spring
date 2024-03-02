@@ -2,18 +2,21 @@ package dev.ian.movies.entity;
 
 import java.util.List;
 
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 
@@ -32,8 +35,15 @@ public class Review {
     @Column(name = "rate")
     private int rate;
 
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
+    private User user;
+
     @ManyToMany(mappedBy = "reviews")
-    private List<User> users;
+    @JsonBackReference
+    private List<Movie> movies;
+
 
     public Review() {
     }
@@ -69,11 +79,19 @@ public class Review {
         this.rate = rate;
     }
 
-    public List<User> getUser() {
-        return users;
+    public User getUser() {
+        return user;
     }
 
-    public void setUser(List<User> users) {
-        this.users = users;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<Movie> getMovie() {
+        return movies;
+    }
+
+    public void setMovie(List<Movie> movies) {
+        this.movies = movies;
     }
 }

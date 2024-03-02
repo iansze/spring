@@ -24,3 +24,9 @@ export type User = {
 };
 
 export type AuthMethod = "Login" | "Signup" | "Update" | undefined;
+
+export type Review = {
+  content: string;
+  rate: number;
+  username: string;
+};

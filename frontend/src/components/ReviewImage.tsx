@@ -17,7 +17,7 @@ const ReviewImage = ({ id }: ReviewImageProps) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await instance.get(`${requests.fetchImagesById}/${id}`);
+      const res = await instance.get(`${requests.fetchImagesById}${id}`);
       setImageUrls(res.data);
     };
     fetchData();

@@ -52,6 +52,16 @@ public class Movie {
     @JsonManagedReference
     private List<Backdrops> backdrops;
 
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(name = "movie_review", 
+        joinColumns = @JoinColumn(name = "movie_id"),
+        inverseJoinColumns = @JoinColumn(name = "review_id"))
+        @JsonManagedReference
+    private List<Review> reviews;
+
+
+
+
     public Movie() {
     }
 
@@ -131,6 +141,14 @@ public class Movie {
 
     public void setBackdrops(List<Backdrops> backdrops) {
         this.backdrops = backdrops;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
     
