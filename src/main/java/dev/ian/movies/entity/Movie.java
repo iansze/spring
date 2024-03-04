@@ -52,11 +52,8 @@ public class Movie {
     @JsonManagedReference
     private List<Backdrops> backdrops;
 
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "movie_review", 
-        joinColumns = @JoinColumn(name = "movie_id"),
-        inverseJoinColumns = @JoinColumn(name = "review_id"))
-        @JsonManagedReference
+    @OneToMany(mappedBy = "movie")
+    @JsonManagedReference
     private List<Review> reviews;
 
 

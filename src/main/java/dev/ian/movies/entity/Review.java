@@ -40,9 +40,10 @@ public class Review {
     @JsonBackReference
     private User user;
 
-    @ManyToMany(mappedBy = "reviews")
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "movie_id")
     @JsonBackReference
-    private List<Movie> movies;
+    private Movie movie;
 
 
     public Review() {
@@ -87,11 +88,11 @@ public class Review {
         this.user = user;
     }
 
-    public List<Movie> getMovie() {
-        return movies;
+    public Movie getMovie() {
+        return movie;
     }
 
-    public void setMovie(List<Movie> movies) {
-        this.movies = movies;
+    public void setMovie(Movie movie) {
+        this.movie = movie;
     }
 }

@@ -16,7 +16,7 @@ export type MovieData = {
 };
 
 export type User = {
-  user_id?: string;
+  user_id?: number;
   username?: string;
   email: string;
   password: string;
@@ -29,4 +29,6 @@ export type Review = {
   content: string;
   rate: number;
   username: string;
+  user_id: number;
+  movie_id: number;
 };

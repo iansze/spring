@@ -9,14 +9,22 @@ public class ReviewDto {
 
     private String username;
 
+    private int user_id;
+
+    private int movie_id;
+
 
     public ReviewDto() {
     }
 
-    public ReviewDto(String content, int rate , String username) {
+
+
+    public ReviewDto(String content, int rate , String username , int user_id, int movie_id) {
         this.content = content;
         this.rate = rate;
         this.username =username;
+        this.user_id = user_id;
+        this.movie_id = movie_id;
     }
 
 
@@ -41,8 +49,24 @@ public class ReviewDto {
         return username;
     }
 
-    public void setUserNames(String username) {
+    public void setUserName(String username) {
         this.username = username;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    public int getMovie_id() {
+        return movie_id;
+    }
+
+    public void setMovie_id(int movie_id) {
+        this.movie_id = movie_id;
     }
 
 

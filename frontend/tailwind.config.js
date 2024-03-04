@@ -69,11 +69,11 @@ export default {
         },
         fadeOutLeft: {
           "80%": { opacity: "1" },
-          to: { opacity: "0", transform: "translateX(-100vw)" },
+          "100%": { opacity: "0", transform: "translateX(-100vw)", display: "none" },
         },
         fadeOutRight: {
           "80%": { opacity: "1" },
-          to: { opacity: "0", transform: "translateX(100vw)" },
+          "100%": { opacity: "0", transform: "translateX(100vw)", display: "none" },
         },
       },
       animation: {

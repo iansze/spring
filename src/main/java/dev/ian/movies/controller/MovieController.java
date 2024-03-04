@@ -42,16 +42,7 @@ public class MovieController {
         return ResponseEntity.ok(backdrops);
     }
 
-    @GetMapping("/movie/review/{id}")
-    public ResponseEntity<?> getReview(@PathVariable int id) {
-        try{
-            List<ReviewDto> movie = movieService.getAllReviews(id);
-            return ResponseEntity.ok(movie);
-        }catch(Exception e){
-            return ResponseEntity.badRequest().body("Error message: " + e.getMessage());
-        }
-        
-     }
+
 
 
 }

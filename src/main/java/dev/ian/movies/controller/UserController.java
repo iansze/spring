@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import dev.ian.movies.dto.LoginRequest;
 import dev.ian.movies.dto.ReviewDto;
 import dev.ian.movies.dto.UserDto;
+import dev.ian.movies.entity.Review;
 import dev.ian.movies.entity.User;
 import dev.ian.movies.service.UserService;
 
@@ -71,26 +72,6 @@ public class UserController {
      }
      }
 
-     @PostMapping("/user/review/{id}")
-     public ResponseEntity<?> addReview(@PathVariable int id , @RequestBody ReviewDto reviewDto) {
-        try{
-            String review = userService.addReview(id, reviewDto);
-            return ResponseEntity.ok(review);
-        }catch(Exception e){
-            return ResponseEntity.badRequest().body("Error message: " + e.getMessage());
-        }
-        
-     }
-
-     @GetMapping("/user/review/{id}")
-     public ResponseEntity<?> getReview(@PathVariable int id) {
-        try{
-            User user = userService.findById(id).get();
-            return ResponseEntity.ok(user.getReview());
-        }catch(Exception e){
-            return ResponseEntity.badRequest().body("Error message: " + e.getMessage());
-        }
-        
-     }
+     
 
 }

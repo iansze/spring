@@ -18,7 +18,7 @@ const Header = () => {
   const [authType, setAuthType] = useState<AuthMethod>(undefined);
 
   return (
-    <div className="flex justify-between items-center px-4 py-2 m-auto bg-black text-white">
+    <div className="flex justify-between items-center px-4 py-2 m-auto bg-black text-white relative">
       <h1 className="">Movie Review</h1>
       <Input type="text" placeholder="Search" className="w-1/2" />
       <DropdownMenu>

@@ -60,18 +60,5 @@ public class UserService {
         return userRepository.save(user);
     }
     
-    public String addReview(int id , ReviewDto reviewDto) {
-        User user = userRepository.findById(id).get();
-
-        Review review = new Review(); 
-        review.setContent(reviewDto.getContent());
-        user.setReview(review);
-        userRepository.save(user);
-        return "Review added successfully";
-    }
-
-    public Review getReview(int id) {
-        User user = userRepository.findById(id).get();
-        return user.getReview().get(0);
-    }
+   
 }

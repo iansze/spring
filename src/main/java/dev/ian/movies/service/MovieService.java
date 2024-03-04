@@ -53,22 +53,5 @@ public class MovieService  {
         return movieReposity.findById(id);
     }
 
-    public List<ReviewDto> getAllReviews (int id){
-        TypedQuery<Review> query = entityManager.createQuery(
-        "SELECT r FROM Review r JOIN r.movies m WHERE m.id = :id", Review.class);
-        query.setParameter("id", id);
-        try {
-            List<Review> reviews = query.getResultList();
-            List<ReviewDto> reviewDTOs = new ArrayList<>();
-            for (Review review : reviews) {
-                String username = review.getUser().getUsername();
-                ReviewDto dto = new ReviewDto(review.getContent(), review.getRate(),username);
-                reviewDTOs.add(dto);
-            }
-            return reviewDTOs;
-        } catch (NoResultException e) {
-            return null;
-        }
-
-    }
+    
 }
